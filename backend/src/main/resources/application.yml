@@ -1,0 +1,65 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: hotel-food-ordering
+
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:hotel_food_ordering}?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:root}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: false
+        dialect: org.hibernate.dialect.MySQLDialect
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:CHANGE_THIS_TO_A_LONG_RANDOM_SECRET_AT_LEAST_256_BITS_LONG}
+    expiration-ms: ${JWT_EXPIRATION_MS:86400000} # 24 hours
+
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173}
+
+  razorpay:
+    key-id: ${RAZORPAY_KEY_ID:rzp_test_TwCNTKZSO8hVFr}
+    key-secret: ${RAZORPAY_KEY_SECRET:WtkqcHQfUuMzsBeS0OGe1OY4}
+    webhook-secret: ${RAZORPAY_WEBHOOK_SECRET:CHANGE_ME}
+    currency: INR
+
+  order:
+    tracking-link-base: ${TRACKING_LINK_BASE:http://localhost:5173/track}
+    tracking-token-expiry-days: 14
+    cancellable-statuses: CONFIRMED,PREPARING
+
+  aws:
+    s3:
+      enabled: ${AWS_S3_ENABLED:false}
+      bucket: ${AWS_S3_BUCKET:hotel-food-ordering-images}
+      region: ${AWS_REGION:ap-south-1}
+
+  admin:
+    # Used only by the data seeder on first run if no admin exists.
+    bootstrap-email: ${ADMIN_BOOTSTRAP_EMAIL:admin@hotel.com}
+    bootstrap-password: ${ADMIN_BOOTSTRAP_PASSWORD:Admin@12345}
+
+logging:
+  level:
+    com.hotel.foodordering: INFO
