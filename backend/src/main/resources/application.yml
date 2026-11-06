@@ -7,8 +7,8 @@ spring:
 
   datasource:
     url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:hotel_food_ordering}?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-    username: ${DB_USERNAME:root}
-    password: ${DB_PASSWORD:root}
+    username: ${DB_USERNAME:foodapp}
+    password: ${DB_PASSWORD:7794011990}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
